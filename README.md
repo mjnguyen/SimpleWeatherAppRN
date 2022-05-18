@@ -133,5 +133,11 @@ To test and make sure that this is set up correctly, we to start Metro first by 
 
 Metro is a light weight httpd server that allows us to make live edits to the JS.
 
-Once it has finished loading.  Startup your iOS app by opening up the workspace file (<project>.xcworkspace and not <project>.xcodeproj)
+Once it has finished loading, startup your iOS app by opening up the workspace file (<project>.xcworkspace and not <project>.xcodeproj)
+Alternatively, you can use this command line instruction
+
+```bash
+# From the root of your project
+$ npx react-native run-ios
+```
 
