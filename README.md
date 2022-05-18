@@ -19,6 +19,10 @@ brew install rbenv ruby-build
 * watchman - install view brew => "brew install watchman"
 * cocoapods
 
+# Install React CLI Tools
+```bash
+    npm install -g react-native-cli
+```
 
 # Installation
 
@@ -46,6 +50,7 @@ brew install rbenv ruby-build
         moment@2.29.3                       => 'yarn add moment'
         react-native-paper@4.12.1           => 'yarn add react-native-paper'
         react-native-vector-icons@9.1.0     => 'yarn add react-native-vector-icons'
+
 
 4. Setup cocoapods for your iOS project.
     a. Goto the "ios" folder created in step 1
