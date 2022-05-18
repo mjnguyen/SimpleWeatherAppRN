@@ -1,0 +1,17 @@
+{
+  "name": "YourReactNativeApp",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "start": "yarn react-native start"
+  },
+  "dependencies": {
+    "@babel/core": "*",
+    "@babel/preset-env": "^7.17.10",
+    "moment": "^2.29.3",
+    "react": "17.0.2",
+    "react-native": "^0.68.2",
+    "react-native-paper": "^4.12.1",
+    "react-native-vector-icons": "*"
+  }
+}
