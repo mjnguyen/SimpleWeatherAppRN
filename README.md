@@ -6,6 +6,7 @@ SimpleWeatherApp with an integration with React Native
 
 
 ## Install rbenv & ruby-build -- ruby version manager and build framework
+See https://github.com/rbenv/rbenv for complete instructions on how to set it up
 
 ```bash
 brew install rbenv ruby-build
@@ -100,7 +101,7 @@ brew install rbenv ruby-build
 ```
 
 6. update React Native with support 
-# Modify __index.js__ 
+####  Modify __index.js__ 
 ```javascript
 import React from 'react';
 import {
@@ -122,4 +123,15 @@ const YourApp = () => {
 AppRegistry.registerComponent('YourApp', () => YourApp);
 ````
 
+
+# Test installation
+To test and make sure that this is set up correctly, we to start Metro first by running the following command at the root of our project:
+
+```bash
+> yarn start
+```
+
+Metro is a light weight httpd server that allows us to make live edits to the JS.
+
+Once it has finished loading.  Startup your iOS app by opening up the workspace file (<project>.xcworkspace and not <project>.xcodeproj)
 
