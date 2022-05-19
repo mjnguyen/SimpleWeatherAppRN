@@ -1,4 +1,6 @@
-import React, { useState, useEffect } from "react";
+"use strict";
+
+import React, { useState, useEffect, Component } from "react";
 import { AppRegistry, Button, Text, View, TextInput } from "react-native";
 import {
   SafeAreaView,
@@ -12,6 +14,7 @@ import { NativeModules, NativeEventEmitter } from "react-native";
 import { render } from "react-native/Libraries/Renderer/implementations/ReactNativeRenderer-prod";
 
 import { default as Weather } from "./App/Views/Weather";
+import { default as Forecasts } from "./App/Views/Forecasts";
 
 const { RNEventEmitter } = NativeModules;
 const { MNWeatherServicesModule } = NativeModules;
@@ -39,33 +42,53 @@ const styles = StyleSheet.create({
 });
 
 const YourApp = () => {
+  const [initialized, setInitialized] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [renderForecast, setRenderForecast] = useState(false);
+  const [renderWeather, setRenderWeather] = useState(false);
   const [weatherData, setWeatherData] = useState();
   const [weatherDataLoaded, setWeatherDataLoaded] = useState(false);
   const [forecastDays, setForecastDays] = useState(5);
   const [forecastData, setForecastData] = useState();
   const [forecastDataLoaded, setForecastDataLoaded] = useState(false);
 
-  eventEmitter.addListener("onReceiveForecasts", function (res) {
-    let base = JSON.parse(res.response);
-    console.log("got weather forecast for {" + base.city.name + " - " + forecastDays + "} results: ", typeof(base), base);
-    setForecastData(base);
-    setWeatherDataLoaded(false);
-    setForecastDataLoaded(true);
-  });
+  useEffect(() => {
+    if (!initialized) {
+      eventEmitter.addListener("onReceiveForecasts", function (res) {
+        let base = JSON.parse(res.response);
+        console.log("got weather forecast for {" + base.city.name + " - " + forecastDays + "} results: ", typeof(base), base);
+  
+          setWeatherDataLoaded(false);
+  
+          setForecastData(base);
+          setForecastDataLoaded(true);
+  
+          setIsLoading(false);
+          setRenderWeather(false);
+          setRenderForecast(true);
+      });
 
-  eventEmitter.addListener("onReceiveWeatherConditions", function (res) {
-    let base = JSON.parse(res.response);
-    console.log("Setting weather data json is " + base);
-    setWeatherData(base);
-    setForecastDataLoaded(false);
-    setWeatherDataLoaded(true);
-  });
+      eventEmitter.addListener("onReceiveWeatherConditions", function (res) {
+        let base = JSON.parse(res.response);
+        console.log("Setting weather data json is " + base);
+        setForecastDataLoaded(false);
+        setWeatherData(base);
+        setWeatherDataLoaded(true);
+        setIsLoading(false);
+        setRenderForecast(false);
+        setRenderWeather(false);
+      });
+  
+      setInitialized(true);
+    }
+  
+  }, [weatherData]);  
 
   var getForecast = function () {
     console.log("button pressed to get Forecast");
     // use native API manager to get forecast information
     // display in a table view
-    console.log("forecast: " + {forecastDays} + forecastDays);
+    setIsLoading(true);
     MNWeatherServicesModule.getForecast('San Jose', forecastDays)
 
   };
@@ -104,8 +127,9 @@ const YourApp = () => {
           },
         ]}
       >
-        {weatherDataLoaded && weatherData && <Weather data={weatherData} />}
-        {forecastDataLoaded && forecastData && <Forecasts data={forecastData} />}
+        {renderForecast && !isLoading && forecastDataLoaded && forecastData && <Forecasts data={forecastData} />}
+
+        {renderWeather && !isLoading && weatherDataLoaded && weatherData && <Weather data={weatherData} />}
       </View>
     </SafeAreaView>
   );

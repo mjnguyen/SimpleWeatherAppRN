@@ -29,7 +29,7 @@ const Weather = ({ data }) => {
     var sunset =moment(sunsetTimestamp).format("h:MM:ss a");
     var sunriseTimestamp = new Date( data.sys.sunrise * 1000);
     var sunrise = moment(sunriseTimestamp).format("h:MM:ss a");
-
+    console.log("Rendering Weather....");
   return (
     <>
       <View style={[styles.container, { flexDirection: "column" }]}>

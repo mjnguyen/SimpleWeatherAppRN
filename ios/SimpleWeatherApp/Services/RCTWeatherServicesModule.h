@@ -7,7 +7,6 @@
 
 #ifndef RCTWeatherServicesModule_h
 #define RCTWeatherServicesModule_h
-//  RCTCalendarModule.h
 #import <React/RCTBridgeModule.h>
 @interface RCTWeatherServicesModule : NSObject <RCTBridgeModule>
 @end
